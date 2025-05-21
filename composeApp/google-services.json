@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225752588538",
+    "project_id": "kollarappa-family-tree",
+    "storage_bucket": "kollarappa-family-tree.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225752588538:android:1c6469a547fb4019dee943",
+        "android_client_info": {
+          "package_name": "org.kollarappa.familytree"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdTtPFxLHOA_KZ7S3jyMy-wBYq6phyHgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
