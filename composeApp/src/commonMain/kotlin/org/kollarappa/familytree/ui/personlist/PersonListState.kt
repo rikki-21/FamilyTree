@@ -22,4 +22,12 @@ data class PersonListState(
     val error: String? = null,
     val personAdded: Boolean = false,
     val relationshipAdded: Boolean = false,
+    val person1SearchQuery: String = "",
+    val person1SearchResults: List<Person> = emptyList(),
+    val selectedPerson1: Person? = null,
+    val person2SearchQuery: String = "",
+    val person2SearchResults: List<Person> = emptyList(),
+    val selectedPerson2: Person? = null,
+    val isSearchingPerson1: Boolean = false,
+    val isSearchingPerson2: Boolean = false
 )

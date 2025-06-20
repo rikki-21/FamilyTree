@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -180,80 +181,317 @@ fun AddScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text("Add Relationship", style = MaterialTheme.typography.headlineSmall) // Heading
+//
+//        ExposedDropdownMenuBox(
+//            expanded = state.relationshipPerson1Name.isNotEmpty(),
+//            onExpandedChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged(if (it) "" else state.relationshipPerson1Name)) }
+//        ) {
+//            OutlinedTextField(
+//                value = state.relationshipPerson1Name,
+//                onValueChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged(it)) },
+//                label = { Text("Person 1 Name", style = MaterialTheme.typography.labelLarge) }, // Label
+//                readOnly = true,
+//                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.relationshipPerson1Name.isNotEmpty()) },
+//                modifier = Modifier.menuAnchor()
+//            )
+//            ExposedDropdownMenu(
+//                expanded = state.relationshipPerson1Name.isNotEmpty(),
+//                onDismissRequest = { viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged("")) }
+//            ) {
+//                state.allPersons.map { it.firstName + " " + it.lastName }.forEach { selectionOption ->
+//                    DropdownMenuItem(onClick = {
+//                        viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged(selectionOption))
+//                    }, text = {
+//                        Text(text = selectionOption, style = MaterialTheme.typography.bodyMedium) // Body text
+//                    })
+//                }
+//            }
+//        }
+//
+//        ExposedDropdownMenuBox(
+//            expanded = state.relationshipPerson2Name.isNotEmpty(),
+//            onExpandedChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged(if (it) "" else state.relationshipPerson2Name)) }
+//        ) {
+//            OutlinedTextField(
+//                value = state.relationshipPerson2Name,
+//                onValueChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged(it)) },
+//                label = { Text("Person 2 Name", style = MaterialTheme.typography.labelLarge) }, // Label
+//                readOnly = true,
+//                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.relationshipPerson2Name.isNotEmpty()) },
+//                modifier = Modifier.menuAnchor()
+//            )
+//            ExposedDropdownMenu(
+//                expanded = state.relationshipPerson2Name.isNotEmpty(),
+//                onDismissRequest = { viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged("")) }
+//            ) {
+//                state.allPersons.map { it.firstName + " " + it.lastName }.forEach { selectionOption ->
+//                    DropdownMenuItem(onClick = {
+//                        viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged(selectionOption))
+//                    }, text =  {
+//                        Text(text = selectionOption, style = MaterialTheme.typography.bodyMedium) // Body text
+//                    })
+//                }
+//            }
+//        }
 
-        ExposedDropdownMenuBox(
-            expanded = state.relationshipPerson1Name.isNotEmpty(),
-            onExpandedChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged(if (it) "" else state.relationshipPerson1Name)) }
-        ) {
-            OutlinedTextField(
-                value = state.relationshipPerson1Name,
-                onValueChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged(it)) },
-                label = { Text("Person 1 Name", style = MaterialTheme.typography.labelLarge) }, // Label
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.relationshipPerson1Name.isNotEmpty()) },
-                modifier = Modifier.menuAnchor()
-            )
-            ExposedDropdownMenu(
-                expanded = state.relationshipPerson1Name.isNotEmpty(),
-                onDismissRequest = { viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged("")) }
-            ) {
-                state.allPersons.map { it.firstName + " " + it.lastName }.forEach { selectionOption ->
-                    DropdownMenuItem(onClick = {
-                        viewModel.handleIntent(PersonListIntent.RelationshipPerson1NameChanged(selectionOption))
-                    }, text = {
-                        Text(text = selectionOption, style = MaterialTheme.typography.bodyMedium) // Body text
-                    })
-                }
-            }
-        }
+//        var person1DropdownExpanded by remember { mutableStateOf(false) }
+//
+//        Column { // Wrap TextField and DropdownMenu
+//            OutlinedTextField(
+//                value = state.selectedPerson1?.let { "${it.firstName} ${it.lastName}" } ?: state.person1SearchQuery,
+//                onValueChange = { query ->
+//                    viewModel.handleIntent(PersonListIntent.SearchPerson1(query))
+//                    person1DropdownExpanded = query.isNotBlank() && state.person1SearchResults.isNotEmpty()
+//                },
+//                label = { Text("Search Person 1") },
+//                modifier = Modifier.fillMaxWidth(),
+//                trailingIcon = {
+//                    if (state.selectedPerson1 != null || state.person1SearchQuery.isNotEmpty()) {
+//                        IconButton(onClick = {
+//                            viewModel.handleIntent(PersonListIntent.ClearPerson1Selection) // Implement this intent
+//                            viewModel.handleIntent(PersonListIntent.SearchPerson1("")) // Clear search results
+//                            person1DropdownExpanded = false
+//                        }) {
+//                            Icon(Icons.Filled.Clear, "Clear selection")
+//                        }
+//                    }
+//                }
+//            )
+//
+//            if (state.isSearchingPerson1) { // Add this to state
+//                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+//            }
+//
+//            DropdownMenu(
+//                expanded = person1DropdownExpanded && state.person1SearchResults.isNotEmpty(),
+//                onDismissRequest = { person1DropdownExpanded = false },
+//                modifier = Modifier.fillMaxWidth() // Adjust width as needed
+//            ) {
+//                state.person1SearchResults.forEach { person ->
+//                    DropdownMenuItem(
+//                        text = { Text("${person.firstName} ${person.lastName}") },
+//                        onClick = {
+//                            viewModel.handleIntent(PersonListIntent.SelectPerson1(person))
+//                            person1DropdownExpanded = false
+//                        }
+//                    )
+//                }
+//                if (state.person1SearchResults.isEmpty() && state.person1SearchQuery.isNotBlank() && !state.isSearchingPerson1) {
+//                    DropdownMenuItem(
+//                        text = { Text("No results found") },
+//                        onClick = { person1DropdownExpanded = false },
+//                        enabled = false
+//                    )
+//                }
+//            }
+//        }
 
-        ExposedDropdownMenuBox(
-            expanded = state.relationshipPerson2Name.isNotEmpty(),
-            onExpandedChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged(if (it) "" else state.relationshipPerson2Name)) }
-        ) {
-            OutlinedTextField(
-                value = state.relationshipPerson2Name,
-                onValueChange = { viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged(it)) },
-                label = { Text("Person 2 Name", style = MaterialTheme.typography.labelLarge) }, // Label
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.relationshipPerson2Name.isNotEmpty()) },
-                modifier = Modifier.menuAnchor()
-            )
-            ExposedDropdownMenu(
-                expanded = state.relationshipPerson2Name.isNotEmpty(),
-                onDismissRequest = { viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged("")) }
-            ) {
-                state.allPersons.map { it.firstName + " " + it.lastName }.forEach { selectionOption ->
-                    DropdownMenuItem(onClick = {
-                        viewModel.handleIntent(PersonListIntent.RelationshipPerson2NameChanged(selectionOption))
-                    }, text =  {
-                        Text(text = selectionOption, style = MaterialTheme.typography.bodyMedium) // Body text
-                    })
-                }
-            }
-        }
+        var person1DropdownExpanded by remember { mutableStateOf(false) }
 
-        var expandedRelationship by remember { mutableStateOf(false) }
-        Column {
+        Column { // Wrap TextField and DropdownMenu
             OutlinedTextField(
-                value = state.selectedRelationshipType.name,
-                onValueChange = {},
-                label = { Text("Relationship Type", style = MaterialTheme.typography.labelLarge) }, // Label
-                readOnly = true,
+                value = state.selectedPerson1?.let { "${it.firstName} ${it.lastName}" } ?: state.person1SearchQuery,
+                onValueChange = { query ->
+                    viewModel.handleIntent(PersonListIntent.SearchPerson1(query))
+                    // Expand dropdown if user is typing a non-blank query
+                    person1DropdownExpanded = query.isNotBlank()
+                },
+                label = { Text("Search Person 1") },
+                modifier = Modifier.fillMaxWidth(),
                 trailingIcon = {
-                    IconButton(onClick = { expandedRelationship = !expandedRelationship }) {
-                        Icon(Icons.Filled.ArrowDropDown, contentDescription = "Dropdown")
+                    if (state.selectedPerson1 != null || state.person1SearchQuery.isNotEmpty()) {
+                        IconButton(onClick = {
+                            viewModel.handleIntent(PersonListIntent.ClearPerson1Selection)
+                            person1DropdownExpanded = false // Close dropdown
+                        }) {
+                            Icon(Icons.Filled.Clear, "Clear selection or search")
+                        }
                     }
                 }
             )
-            DropdownMenu(expanded = expandedRelationship, onDismissRequest = { expandedRelationship = false }) {
-                RelationshipType.values().forEach { type ->
-                    DropdownMenuItem(onClick = {
-                        viewModel.handleIntent(PersonListIntent.RelationshipTypeChanged(type))
-                        expandedRelationship = false
-                    }, text = {
-                        Text(text = type.name, style = MaterialTheme.typography.bodyMedium) // Body text
-                    })
+
+            if (state.isSearchingPerson1) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp))
+            }
+
+            // DropdownMenu for Person 1 search results
+            // Expanded if:
+            // 1. person1DropdownExpanded is true (user interacted with field)
+            // 2. There's an active search query (state.person1SearchQuery.isNotBlank())
+            // 3. We are not currently in the process of searching (state.isSearchingPerson1 is false)
+            val showPerson1Dropdown = person1DropdownExpanded && state.person1SearchQuery.isNotBlank() && !state.isSearchingPerson1
+
+            DropdownMenu(
+                expanded = showPerson1Dropdown,
+                onDismissRequest = { person1DropdownExpanded = false },
+                modifier = Modifier.fillMaxWidth() // Adjust width as needed
+            ) {
+                // This content is rendered only if 'expanded' (showPerson1Dropdown) is true.
+                // So, state.person1SearchQuery.isNotBlank() and !state.isSearchingPerson1 are true here.
+                if (state.person1SearchResults.isNotEmpty()) {
+                    state.person1SearchResults.forEach { person ->
+                        DropdownMenuItem(
+                            text = { Text("${person.firstName} ${person.lastName}") },
+                            onClick = {
+                                viewModel.handleIntent(PersonListIntent.SelectPerson1(person))
+                                person1DropdownExpanded = false // Close dropdown after selection
+                            }
+                        )
+                    }
+                } else { // No results, but person1SearchQuery is not blank and not currently searching
+                    DropdownMenuItem(
+                        text = { Text("No results found for \"${state.person1SearchQuery}\"") },
+                        onClick = { person1DropdownExpanded = false }, // Close dropdown
+                        enabled = false
+                    )
+                }
+            }
+        }
+        // Person 2 search dropdown
+        var person2DropdownExpanded by remember { mutableStateOf(false) }
+
+        Column { // Wrap TextField and DropdownMenu
+            OutlinedTextField(
+                value = state.selectedPerson2?.let { "${it.firstName} ${it.lastName}" } ?: state.person2SearchQuery,
+                onValueChange = { query ->
+                    viewModel.handleIntent(PersonListIntent.SearchPerson2(query))
+                    // Expand dropdown if user is typing a non-blank query
+                    person2DropdownExpanded = query.isNotBlank()
+                },
+                label = { Text("Search Person 2") },
+                modifier = Modifier.fillMaxWidth(),
+                trailingIcon = {
+                    if (state.selectedPerson2 != null || state.person2SearchQuery.isNotEmpty()) {
+                        IconButton(onClick = {
+                            viewModel.handleIntent(PersonListIntent.ClearPerson2Selection)
+                            person2DropdownExpanded = false // Close dropdown
+                        }) {
+                            Icon(Icons.Filled.Clear, "Clear selection or search")
+                        }
+                    }
+                }
+            )
+
+            if (state.isSearchingPerson2) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp))
+            }
+
+            // DropdownMenu for Person 2 search results
+            // Expanded if:
+            // 1. person1DropdownExpanded is true (user interacted with field)
+            // 2. There's an active search query (state.person1SearchQuery.isNotBlank())
+            // 3. We are not currently in the process of searching (state.isSearchingPerson1 is false)
+            val showPerson2Dropdown = person2DropdownExpanded && state.person2SearchQuery.isNotBlank() && !state.isSearchingPerson2
+
+            DropdownMenu(
+                expanded = showPerson2Dropdown,
+                onDismissRequest = { person2DropdownExpanded = false },
+                modifier = Modifier.fillMaxWidth() // Adjust width as needed
+            ) {
+                // This content is rendered only if 'expanded' (showPerson2Dropdown) is true.
+                // So, state.person2SearchQuery.isNotBlank() and !state.isSearchingPerson2 are true here.
+                if (state.person2SearchResults.isNotEmpty()) {
+                    state.person2SearchResults.forEach { person ->
+                        DropdownMenuItem(
+                            text = { Text("${person.firstName} ${person.lastName}") },
+                            onClick = {
+                                viewModel.handleIntent(PersonListIntent.SelectPerson2(person))
+                                person2DropdownExpanded = false // Close dropdown after selection
+                            }
+                        )
+                    }
+                } else { // No results, but person2SearchQuery is not blank and not currently searching
+                    DropdownMenuItem(
+                        text = { Text("No results found for \"${state.person2SearchQuery}\"") },
+                        onClick = { person2DropdownExpanded = false }, // Close dropdown
+                        enabled = false
+                    )
+                }
+            }
+        }
+
+//        var person2DropdownExpanded by remember { mutableStateOf(false) }
+//
+//        Column { // Wrap TextField and DropdownMenu
+//            OutlinedTextField(
+//                value = state.selectedPerson2?.let { "${it.firstName} ${it.lastName}" } ?: state.person2SearchQuery,
+//                onValueChange = { query ->
+//                    viewModel.handleIntent(PersonListIntent.SearchPerson2(query))
+//                    person2DropdownExpanded = query.isNotBlank() && state.person2SearchResults.isNotEmpty()
+//                },
+//                label = { Text("Search Person 2") },
+//                modifier = Modifier.fillMaxWidth(),
+//                trailingIcon = {
+//                    if (state.selectedPerson2 != null || state.person2SearchQuery.isNotEmpty()) {
+//                        IconButton(onClick = {
+//                            viewModel.handleIntent(PersonListIntent.ClearPerson2Selection) // Implement this intent
+//                            viewModel.handleIntent(PersonListIntent.SearchPerson2("")) // Clear search results
+//                            person2DropdownExpanded = false
+//                        }) {
+//                            Icon(Icons.Filled.Clear, "Clear selection")
+//                        }
+//                    }
+//                }
+//            )
+//
+//            if (state.isSearchingPerson2) { // Add this to state
+//                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+//            }
+//
+//            DropdownMenu(
+//                expanded = person2DropdownExpanded && state.person2SearchResults.isNotEmpty(),
+//                onDismissRequest = { person2DropdownExpanded = false },
+//                modifier = Modifier.fillMaxWidth() // Adjust width as needed
+//            ) {
+//                state.person2SearchResults.forEach { person ->
+//                    DropdownMenuItem(
+//                        text = { Text("${person.firstName} ${person.lastName}") },
+//                        onClick = {
+//                            viewModel.handleIntent(PersonListIntent.SelectPerson2(person))
+//                            person2DropdownExpanded = false
+//                        }
+//                    )
+//                }
+//                if (state.person2SearchResults.isEmpty() && state.person2SearchQuery.isNotBlank() && !state.isSearchingPerson2) {
+//                    DropdownMenuItem(
+//                        text = { Text("No results found") },
+//                        onClick = { person2DropdownExpanded = false },
+//                        enabled = false
+//                    )
+//                }
+//            }
+//        }
+
+        var relationshipTypeExpanded by remember { mutableStateOf(false) }
+        val relationshipTypes = remember { RelationshipType.values() } // Get all enum values
+
+        ExposedDropdownMenuBox(
+            expanded = relationshipTypeExpanded,
+            onExpandedChange = { relationshipTypeExpanded = !relationshipTypeExpanded },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            OutlinedTextField(
+                value = state.selectedRelationshipType.displayName,
+                onValueChange = {}, // Not directly editable
+                readOnly = true,
+                label = { Text("Relationship Type") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = relationshipTypeExpanded) },
+                modifier = Modifier
+                    .menuAnchor() // Important for ExposedDropdownMenuBox
+                    .fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = relationshipTypeExpanded,
+                onDismissRequest = { relationshipTypeExpanded = false }
+            ) {
+                relationshipTypes.forEach { type ->
+                    DropdownMenuItem(
+                        text = { Text(type.displayName) }, // Assuming RelationshipType has a user-friendly displayName
+                        onClick = {
+                            viewModel.handleIntent(PersonListIntent.RelationshipTypeChanged(type))
+                            relationshipTypeExpanded = false
+                        }
+                    )
                 }
             }
         }

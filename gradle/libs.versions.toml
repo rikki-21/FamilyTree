@@ -23,7 +23,7 @@ lifecycleViewmodelComposeVersion = "2.9.0"
 material3 = "1.3.1"
 material3Android = "1.3.1"
 navigationCompose = "2.9.0-beta01"
-navigationComposeJvmstubs = "2.9.0"
+#navigationComposeJvmstubs = "2.9.0"
 playServicesTasks = "18.3.0"
 
 [libraries]
@@ -48,7 +48,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
+#androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
 play-services-tasks = { group = "com.google.android.gms", name = "play-services-tasks", version.ref = "playServicesTasks" }
 desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version = "2.1.5" }
 

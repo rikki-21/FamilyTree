@@ -48,7 +48,7 @@ kotlin {
 //            implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.viewmodel.compose.v290)
             implementation(libs.navigation.compose)
-            implementation(libs.androidx.navigation.compose.jvmstubs)
+//            implementation(libs.androidx.navigation.compose.jvmstubs)
             implementation(libs.kotlinx.coroutines.play.services)
         }
 //        iosArm64Main.dependencies {

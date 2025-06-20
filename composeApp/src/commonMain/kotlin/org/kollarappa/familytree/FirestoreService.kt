@@ -3,7 +3,10 @@ package org.kollarappa.familytree
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.DocumentSnapshot
 import dev.gitlive.firebase.firestore.FirebaseFirestore
+import dev.gitlive.firebase.firestore.endAt
 import dev.gitlive.firebase.firestore.firestore
+import dev.gitlive.firebase.firestore.orderBy
+import dev.gitlive.firebase.firestore.startAt
 import dev.gitlive.firebase.firestore.where
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +15,6 @@ import kotlinx.coroutines.flow.flow
 import org.kollarappa.familytree.models.Person
 import org.kollarappa.familytree.models.Relationship
 import org.kollarappa.familytree.models.RelationshipType
-import com.google.android.gms.tasks.Task
 
 class FirestoreService(
     private val firestore: FirebaseFirestore = Firebase.firestore,
@@ -106,7 +108,6 @@ class FirestoreService(
                 .where("person1Id", "==", personId)
                 .where("person2Id", "==", personId)
                 .get()
-                .await()
 
             snapshot.documents.mapNotNull { document: DocumentSnapshot ->
                 mapDocumentToRelationship(document)
@@ -115,6 +116,44 @@ class FirestoreService(
             // Log the error or handle it as needed
             println("Error fetching relationships for person: ${e.message}")
             null
+        }
+    }
+
+
+    suspend fun searchPersonsByName(nameQuery: String, limit: Int = 10): List<Person> {
+        if (nameQuery.isBlank()) {
+            return emptyList()
+        }
+        return try {
+            // This is a basic example. Firestore's querying capabilities for partial
+            // string matches are limited. You might need to structure your data
+            // or use a third-party search service (like Algolia with Firebase)
+            // for more advanced search functionality.
+            // A common approach is to query for names starting with the query.
+            // Ensure you have appropriate indexes in Firestore for these queries.
+            val firstNameSnapshot = personCollection
+                .orderBy("firstName") // You'll need an index for this
+                .startAt(nameQuery)
+                .endAt(nameQuery + '\uf8ff') // '\uf8ff' is a high Unicode character
+                .limit(limit.toLong())
+                .get()
+
+            val lastNameSnapshot = personCollection
+                .orderBy("lastName") // You'll need an index for this
+                .startAt(nameQuery)
+                .endAt(nameQuery + '\uf8ff')
+                .limit(limit.toLong())
+                .get()
+
+            val persons = (firstNameSnapshot.documents.mapNotNull { mapDocumentToPerson(it) } +
+                    lastNameSnapshot.documents.mapNotNull { mapDocumentToPerson(it) })
+                .distinctBy { it.id } // Remove duplicates if any
+                .take(limit)
+
+            persons
+        } catch (e: Exception) {
+            println("Error searching persons: ${e.message}")
+            emptyList()
         }
     }
 }
